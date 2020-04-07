@@ -1,5 +1,6 @@
 const express = require('express')
 const robotjs = require('robotjs')
+const fs = require('fs')
 
 const app = express()
 const port = 3000
@@ -16,6 +17,12 @@ async function countdown (seconds) {
     console.log('countdown >>', i)
     await wait(SECOND)
   }
+}
+
+function load (path) {
+  return new Promise((resolve, reject) =>
+    fs.readFile(path, 'utf8', (error, data) => error ? reject(error) : resolve(JSON.parse(data)))
+  )
 }
 
 async function hold (key) {
