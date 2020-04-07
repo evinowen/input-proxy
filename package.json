@@ -1,0 +1,7 @@
+{
+  "name": "input-proxy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Evin Owen <eowen@launchcg.com>",
+  "license": "MIT"
+}
