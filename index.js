@@ -5,6 +5,7 @@ const app = express()
 const port = 3000
 
 const SECOND = 1000
+const HOLD = 0.1 * SECOND
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -17,16 +18,19 @@ async function countdown (seconds) {
   }
 }
 
+async function hold (key) {
+  console.log(key, 'down')
+  robotjs.keyToggle(key, 'down')
+
+  await wait(HOLD)
+
+  console.log(key, 'up')
+  robotjs.keyToggle(key, 'up')
+}
+
 app.post('/left', async (req, res) => {
   await countdown(4)
-
-  console.log('left down')
-  robotjs.keyToggle('left', 'down')
-
-  await wait(0.1 * SECOND)
-
-  console.log('left up')
-  robotjs.keyToggle('left', 'up')
+  await hold('left')
 
   res.status(200).send('OK')
 })
