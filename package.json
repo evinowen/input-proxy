@@ -5,6 +5,7 @@
   "author": "Evin Owen <eowen@launchcg.com>",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.17.1",
     "robotjs": "^0.6.0"
   }
 }
