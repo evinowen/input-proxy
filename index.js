@@ -35,27 +35,21 @@ async function hold (key) {
   robotjs.keyToggle(key, 'up')
 }
 
-const buttons = {
-  up: 'up',
-  down: 'down',
-  left: 'left',
-  right: 'right',
-  a: 'a',
-  b: 'b',
-  select: 'enter',
-  start: 'escape'
+async function main () {
+  const buttons = await load('map.json')
+
+  for (route in buttons) {
+    const key = buttons[route]
+    console.log(`Mapping route /${route} to [${key}]`)
+
+    app.post(`/${route}`, async (req, res) => {
+      await hold(key)
+
+      res.status(200).send('OK')
+    })
+  }
+
+  app.listen(port, () => console.log(`http://localhost:${port}`))
 }
 
-for (route in buttons) {
-  const key = buttons[route]
-  console.log(`Mapping route ${route} to [${key}]`)
-
-  app.post(`/${route}`, async (req, res) => {
-    await hold(key)
-
-    res.status(200).send('OK')
-  })
-}
-
-
-app.listen(port, () => console.log(`http://localhost:${port}`))
+main()
