@@ -1,10 +1,22 @@
 {
-  "up": "up",
-  "down": "down",
-  "left": "left",
-  "right": "right",
-  "a": "a",
-  "b": "b",
-  "select": "enter",
-  "start": "escape"
+  "player1": {
+    "up": "up",
+    "down": "down",
+    "left": "left",
+    "right": "right",
+    "a": "f",
+    "b": "d",
+    "select": "s",
+    "start": "enter"
+  },
+  "player2": {
+    "up": "y",
+    "down": "h",
+    "left": "j",
+    "right": "g",
+    "a": "l",
+    "b": "k",
+    "select": "u",
+    "start": "i"
+  }
 }
