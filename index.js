@@ -28,19 +28,28 @@ async function hold (key) {
   robotjs.keyToggle(key, 'up')
 }
 
-async function main () {
-  const buttons = await load('map.json')
+function make_routes(app, prefix, map) {
+  for (route in map) {
+    const key = map[route]
+    const route_string = `${prefix}/${route}`
 
-  for (route in buttons) {
-    const key = buttons[route]
-    console.log(`Mapping route /${route} to [${key}]`)
+    if (typeof key === 'object') {
+      console.log(`Creating subroutes for ${route_string} ... `)
+      make_routes(app, route_string, key)
+    } else {
+      console.log(`Mapping route ${route_string} to [${key}]`)
+      app.post(`${route_string}`, async (req, res) => {
+        await hold(key)
 
-    app.post(`/${route}`, async (req, res) => {
-      await hold(key)
-
-      res.status(200).send('OK')
-    })
+        res.status(200).send('OK')
+      })
+    }
   }
+}
+
+
+async function main () {
+  make_routes(app, '', await load('map.json'))
 
   app.listen(port, () => console.log(`http://localhost:${port}`))
 }
