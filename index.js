@@ -28,12 +28,12 @@ async function hold (key, duration) {
     duration = HOLD
   }
 
-  console.log(key, 'down')
+  console.log(`Hold ${key} for ${duration}ms`)
   robotjs.keyToggle(key, 'down')
 
   await wait(duration)
 
-  console.log(key, 'up')
+  console.log(`Release ${key}`)
   robotjs.keyToggle(key, 'up')
 }
 
