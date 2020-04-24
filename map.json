@@ -18,5 +18,7 @@
     "b": "k",
     "select": "u",
     "start": "i"
-  }
+  },
+  "speed-up": "+",
+  "speed-down": "-"
 }
