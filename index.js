@@ -6,7 +6,7 @@ const app = express()
 const port = 3000
 
 const SECOND = 1000
-const HOLD = 0.1 * SECOND
+const HOLD = 0.5 * SECOND
 
 function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -18,11 +18,11 @@ function load (path) {
   )
 }
 
-async function hold (key) {
+async function hold (key, duration) {
   console.log(key, 'down')
   robotjs.keyToggle(key, 'down')
 
-  await wait(HOLD)
+  await wait(duration < 0 || HOLD)
 
   console.log(key, 'up')
   robotjs.keyToggle(key, 'up')
@@ -39,7 +39,9 @@ function make_routes(app, prefix, map) {
     } else {
       console.log(`Mapping route ${route_string} to [${key}]`)
       app.post(`${route_string}`, async (req, res) => {
-        await hold(key)
+        let seconds = req.query.s || -1;
+
+        await hold(key, seconds)
 
         res.status(200).send('OK')
       })
