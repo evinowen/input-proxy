@@ -12,8 +12,8 @@
   "player2": {
     "up": "y",
     "down": "h",
-    "left": "j",
-    "right": "g",
+    "left": "g",
+    "right": "j",
     "a": "l",
     "b": "k",
     "select": "u",
