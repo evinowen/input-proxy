@@ -7,7 +7,7 @@ const port = 3000
 
 const SECOND = 1000
 const HOLD = 0.5 * SECOND
-const LIMIT = 5
+const LIMIT = 5 * SECOND
 
 function wait(duration) {
   if (duration > LIMIT) {
@@ -24,10 +24,14 @@ function load (path) {
 }
 
 async function hold (key, duration) {
+  if (duration < 0) {
+    duration = HOLD
+  }
+
   console.log(key, 'down')
   robotjs.keyToggle(key, 'down')
 
-  await wait(duration < 0 || HOLD)
+  await wait(duration)
 
   console.log(key, 'up')
   robotjs.keyToggle(key, 'up')
@@ -46,7 +50,7 @@ function make_routes(app, prefix, map) {
       app.post(`${route_string}`, async (req, res) => {
         let seconds = req.query.s || -1;
 
-        await hold(key, seconds * 1000)
+        await hold(key, seconds * SECOND)
 
         res.status(200).send('OK')
       })
