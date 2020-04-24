@@ -7,9 +7,14 @@ const port = 3000
 
 const SECOND = 1000
 const HOLD = 0.5 * SECOND
+const LIMIT = 5
 
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+function wait(duration) {
+  if (duration > LIMIT) {
+    duration = LIMIT
+  }
+
+  return new Promise(resolve => setTimeout(resolve, duration));
 }
 
 function load (path) {
@@ -41,7 +46,7 @@ function make_routes(app, prefix, map) {
       app.post(`${route_string}`, async (req, res) => {
         let seconds = req.query.s || -1;
 
-        await hold(key, seconds)
+        await hold(key, seconds * 1000)
 
         res.status(200).send('OK')
       })
